@@ -6,6 +6,7 @@ public class Main {
 
     private static String tempo = "";
     public static List<String> parsingString = new ArrayList<String>();
+    public static boolean isMinus = false;
     static int result;
 
     public static void main(String[] args) throws Exception {
@@ -14,7 +15,7 @@ public class Main {
         //String expression = in.next();
 
         //Calculate.calc("5*2+10");
-        Parse("53*(2+2)/10");
+        Parse("-5*2(-2+3)");
         parsingString = Calculate.charComparison(parsingString);
         result = Calculate.CalcResult(parsingString);
         System.out.println(result+" - результат");
@@ -27,7 +28,6 @@ public class Main {
         {
             if(Character.isDigit(str.charAt(x))){
                 System.out.println(str.charAt(x)+" - Число");
-
                 tempo = tempo + str.charAt(x);
                 System.out.println(tempo+" - Число");
                 if(x==str.length()-1){
@@ -37,7 +37,14 @@ public class Main {
             else {
 
                 System.out.println(str.charAt(x)+" - Не число");
-                parsingString.add(tempo);
+                if(str.charAt(x) == '-'){
+                    isMinus = true;
+                    continue;
+                }
+                if(isMinus == true){
+                parsingString.add(tempo = "-"+tempo);
+                isMinus=false;}
+                else {parsingString.add(tempo);}
                 parsingString.add(String.valueOf(str.charAt(x)));
 
                 tempo = "";
